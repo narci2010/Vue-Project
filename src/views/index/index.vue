@@ -15,21 +15,37 @@ export default {
         password: '123456'
       },
       loading: false,
-      registerUrl: 'http://localhost:8080/login'
+      registerUrl: 'http://localhost:8080/getCurrentUser',
+      loginUrl: 'http://localhost:8080/login',
+      logoutUrl: 'http://localhost:8080/logout',
+      createUserURL: 'http://localhost:8080/zsuSysUser/create',
+      registerUrlP: '/api/getCurrentUser',
+      loginUrlP: '/api/login',
+      logoutUrlP: '/api/logout',
+      createUserURLP: '/api/zsuSysUser/create',
+      user: {
+        username: 'narci',
+        password: '123456',
+        roleIds: '1',
+        locked: 0
+      }
 
     }
   },
   mounted: function () {
     this.$nextTick(function () {
       // this.logout()
-      this.handleLogin()
+      // this.handleLogin()
+      // this.test()
+      // this.createUser()
+      this.createUser2()
     })
   },
   methods: {
     logout () {
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8080/logout',
+        url: this.logoutUrlP,
         dataType: 'json',
         withCredentials: true
       }).then(response => {
@@ -44,7 +60,7 @@ export default {
       // axios.get('http://dev.xxxxxxxxxxxxxxx',{withCredentials:true}).then
       this.$axios({
         method: 'post',
-        url: '/api/login',
+        url: this.loginUrlP,
         dataType: 'json',
         withCredentials: true,
         data: this.loginForm,
@@ -58,18 +74,48 @@ export default {
         }]
       }).then(response => {
         // this.$router.push({ path: '/hello' })
+        // 将JSON对象转化为JSON字符
+        // const last=obj.toJSONString()
+        // const last=JSON.stringify(obj)
+        // 将字符串转json对象
+        // const result = JSON.parse(response.data)
         console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
-    handleLogin2 () {
-      console.log('h2')
-      this.$axios.post(this.registerUrl, this.loginForm, {
+    test () {
+      this.$axios.get(this.registerUrlP, this.loginForm, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    createUser () {
+      this.$axios.post(this.createUserURLP, this.user, {
+        transformRequest: [function (data) {
+          let ret = ''
+          for (let it in data) {
+            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+          }
+          return ret
+        }]
+      })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    createUser2 () {
+      this.$axios.post(this.createUserURLP, this.user)
         .then(function (response) {
           console.log(response)
         })
