@@ -28,17 +28,19 @@ export default {
         password: '123456',
         roleIds: '1',
         locked: 0
-      }
+      },
+      cors: ''
 
     }
   },
   mounted: function () {
     this.$nextTick(function () {
+      // this.cors = this.getCookie('XSRF-TOKEN')
       // this.logout()
       // this.handleLogin()
-      // this.test()
+      this.test()
       // this.createUser()
-      this.createUser2()
+      // this.createUser2()
     })
   },
   methods: {
@@ -85,17 +87,26 @@ export default {
       })
     },
     test () {
-      this.$axios.get(this.registerUrlP, this.loginForm, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
+      this.$axios.get(this.registerUrlP, this.loginForm, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
         .then(function (response) {
           console.log(response)
         })
         .catch(function (error) {
           console.log(error)
         })
+    },
+    test2 () {
+      this.$axios({
+        method: 'get',
+        url: this.registerUrlP,
+        dataType: 'json',
+        withCredentials: true
+      }).then(response => {
+        // this.$router.push({ path: '/hello' })
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     },
     createUser () {
       this.$axios.post(this.createUserURLP, this.user, {
@@ -122,6 +133,10 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    getCookie (name) {
+      const v = window.document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
+      return v ? v[2] : null
     }
   }
 }

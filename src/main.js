@@ -10,6 +10,8 @@ Vue.config.productionTip = false
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   config.withCredentials = true
+
+  // config.headers['XSRF-TOKEN'] = config.headers['XSRF-TOKEN']
   // config.headers['host'] = '192.168.3.1:8080'
   // console.log('abc:' + config)
   // config.headers['Accept'] = 'application/json';
