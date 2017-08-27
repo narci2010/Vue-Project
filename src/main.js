@@ -4,6 +4,19 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+// 如果在模块化构建系统中，请确保在开头调用了 Vue.use(Vuex)
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment: state => state.count++,
+    decrement: state => state.count--
+  }
+})
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 // 添加请求拦截器
@@ -35,6 +48,7 @@ axios.interceptors.request.use(function (config) {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {
     App

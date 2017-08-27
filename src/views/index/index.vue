@@ -6,12 +6,12 @@
 <script>
 export default {
   name: 'index',
-  data () {
+  data() {
     return {
       msg: 'Welcome to Your Vue.js App',
       superinfo: {},
       loginForm: {
-        username: 'admin',
+        username: 'narci',
         password: '123456'
       },
       loading: false,
@@ -33,21 +33,21 @@ export default {
 
     }
   },
-  mounted: function () {
-    this.$nextTick(function () {
+  mounted: function() {
+    this.$nextTick(function() {
       // this.cors = this.getCookie('XSRF-TOKEN')
       // this.logout()
       // this.handleLogin()
-      this.test()
+      // this.test()
       // this.createUser()
       // this.createUser2()
     })
   },
   methods: {
-    logout () {
+    logout() {
       this.$axios({
         method: 'get',
-        url: this.logoutUrlP,
+        url: this.logoutUrl,
         dataType: 'json',
         withCredentials: true
       }).then(response => {
@@ -58,16 +58,16 @@ export default {
       })
     },
     // 登录
-    handleLogin () {
+    handleLogin() {
       // axios.get('http://dev.xxxxxxxxxxxxxxx',{withCredentials:true}).then
       this.$axios({
         method: 'post',
-        url: this.loginUrlP,
+        url: this.loginUrl,
         dataType: 'json',
         withCredentials: true,
         data: this.loginForm,
         // 把对象转换成传统form data形式
-        transformRequest: [function (data) {
+        transformRequest: [function(data) {
           let ret = ''
           for (let it in data) {
             ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
@@ -86,16 +86,16 @@ export default {
         console.log(error)
       })
     },
-    test () {
-      this.$axios.get(this.registerUrlP, this.loginForm, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
-        .then(function (response) {
+    test() {
+      this.$axios.get(this.registerUrl, this.loginForm, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function(response) {
           console.log(response)
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error)
         })
     },
-    test2 () {
+    test2() {
       this.$axios({
         method: 'get',
         url: this.registerUrlP,
@@ -108,9 +108,9 @@ export default {
         console.log(error)
       })
     },
-    createUser () {
+    createUser() {
       this.$axios.post(this.createUserURLP, this.user, {
-        transformRequest: [function (data) {
+        transformRequest: [function(data) {
           let ret = ''
           for (let it in data) {
             ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
@@ -118,23 +118,23 @@ export default {
           return ret
         }]
       })
-        .then(function (response) {
+        .then(function(response) {
           console.log(response)
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error)
         })
     },
-    createUser2 () {
+    createUser2() {
       this.$axios.post(this.createUserURLP, this.user)
-        .then(function (response) {
+        .then(function(response) {
           console.log(response)
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error)
         })
     },
-    getCookie (name) {
+    getCookie(name) {
       const v = window.document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
       return v ? v[2] : null
     }
