@@ -15,22 +15,46 @@ export default {
         password: '123456'
       },
       loading: false,
-      registerUrl: 'http://localhost:8080/getCurrentUser',
+      testUrl: 'http://localhost:8080/getCurrentUser',
       loginUrl: 'http://localhost:8080/login',
+      isLoginUrl: 'http://localhost:8080/isLogin',
       logoutUrl: 'http://localhost:8080/logout',
       createUserURL: 'http://localhost:8080/zsuSysUser/create',
-      registerUrlP: '/api/getCurrentUser',
+      testUrlP: '/api/zsuSysResource/list',
       loginUrlP: '/api/login',
       logoutUrlP: '/api/logout',
       createUserURLP: '/api/zsuSysUser/create',
+      createResURLP: '/api/zsuSysResource/create',
+      delResURLP: '/api/zsuSysResource/delete',
+      delResAnyURLP: '/api/zsuSysResource/deleteAny',
+      getRolesPageURLP: '/api/zsuSysRole/listRoles',
+      getResourcePageURLP: '/api/zsuSysResource/listResources',
       user: {
-        username: 'narci',
+        username: 'cool',
         password: '123456',
         roleIds: '1',
         locked: 0
       },
+      res: {
+        available: true,
+        icon: '/icon/3.png',
+        id: 114,
+        name: '系统管理3',
+        parentId: 101,
+        permission: 'setting3:*',
+        sortedIndex: 110,
+        type: 'menu2',
+        url: '/setting23'
+      },
+      role: {
+        pageSize: 5,
+        pageNum: 2
+      },
+      resource: {
+        pageSize: 5,
+        pageNum: 2
+      },
       cors: ''
-
     }
   },
   mounted: function () {
@@ -38,8 +62,14 @@ export default {
       // this.cors = this.getCookie('XSRF-TOKEN')
       // this.logout()
       // this.handleLogin()
-      this.test()
-      // this.createUser()
+      // this.test()
+      // this.getRolesPage()
+      // this.getRolesPagePost()
+      this.getResourcePagePost()
+      // this.delRes()
+      // this.createRes()
+      // this.delResAny()
+      //  this.createUser()
       // this.createUser2()
     })
   },
@@ -87,7 +117,7 @@ export default {
       })
     },
     test () {
-      this.$axios.get(this.registerUrlP, this.loginForm, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+      this.$axios.get(this.testUrlP, this.loginForm, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
         .then(function (response) {
           console.log(response)
         })
@@ -98,7 +128,7 @@ export default {
     test2 () {
       this.$axios({
         method: 'get',
-        url: this.registerUrlP,
+        url: this.testUrlP,
         dataType: 'json',
         withCredentials: true
       }).then(response => {
@@ -127,6 +157,79 @@ export default {
     },
     createUser2 () {
       this.$axios.post(this.createUserURLP, this.user)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    createRes () {
+      this.$axios.post(this.createResURLP, this.res)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    delRes () {
+      let options = {
+        params: {
+          resourceId: 114
+        }
+      }
+      this.$axios.get(this.delResURLP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    delResAny () {
+      let options = {
+        params: {
+          resourceIds: '115, 116, 117'
+        }
+      }
+      this.$axios.get(this.delResAnyURLP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getRolesPage () {
+      let options = {
+        params: {
+          pageSize: 10,
+          pageNum: 1,
+          role: {
+            role: 'admin'
+          }
+        }
+      }
+      this.$axios.get(this.getRolesPageURLP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getRolesPagePost () {
+      this.$axios.post(this.getRolesPageURLP, this.role)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getResourcePagePost () {
+      this.$axios.post(this.getResourcePageURLP, this.resource)
         .then(function (response) {
           console.log(response)
         })
