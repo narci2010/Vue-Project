@@ -12,7 +12,7 @@ export default {
       superinfo: {},
       loginForm: {
         username: 'admin',
-        password: '123456'
+        password: '654321'
       },
       loading: false,
       testUrl: 'http://localhost:8080/getCurrentUser',
@@ -28,7 +28,16 @@ export default {
       delResURLP: '/api/zsuSysResource/delete',
       delResAnyURLP: '/api/zsuSysResource/deleteAny',
       getRolesPageURLP: '/api/zsuSysRole/listRoles',
+      createRoleURLP: '/api/zsuSysRole/create',
+      updateRoleURLP: '/api/zsuSysRole/update',
+      deleteRoleURLP: '/api/zsuSysRole/delete',
+      deleteAnyRoleURLP: '/api/zsuSysRole/deleteAny',
       getResourcePageURLP: '/api/zsuSysResource/listResources',
+      changeSortedURLP: '/api/zsuSysResource/changeSortedIndex',
+      changePwdRULP: '/api/zsuSysUser/changLoginUserPwd',
+      getRolesBySystemTypeRULP: '/api/zsuSysRole/getRolesBySystemType',
+      getUsersPageURLP: '/api/zsuSysUser/listUsers',
+      getResourceBySystemTypeRULP: '/api/zsuSysResource/getResourceBySystemType',
       user: {
         username: 'cool',
         password: '123456',
@@ -48,11 +57,27 @@ export default {
       },
       role: {
         pageSize: 5,
+        pageNum: 1
+      },
+      userpage: {
+        pageSize: 5,
         pageNum: 2
       },
       resource: {
         pageSize: 5,
         pageNum: 2
+      },
+      fromTo: {
+        fromId: 88,
+        toId: 89
+      },
+      role_o: {
+        id: 13,
+        role: 'admin super2',
+        description: 'test3',
+        resourceIds: '21,2,3,5',
+        available: 1,
+        systemType: 2
       },
       cors: ''
     }
@@ -61,16 +86,24 @@ export default {
     this.$nextTick(function () {
       // this.cors = this.getCookie('XSRF-TOKEN')
       // this.logout()
-      // this.handleLogin()
+      this.handleLogin()
       // this.test()
       // this.getRolesPage()
       // this.getRolesPagePost()
-      this.getResourcePagePost()
+      // this.getResourcePagePost()
       // this.delRes()
       // this.createRes()
       // this.delResAny()
       //  this.createUser()
       // this.createUser2()
+      // this.changeSorted()
+      // this.createRole()
+      // this.updateRole()
+      // this.changePWDLoginUser()
+      // this.getRolesByType()
+      // this.getUserPagePost()
+      // this.getResourceByType()
+      console.log(this.getCookie('sid'))
     })
   },
   methods: {
@@ -164,6 +197,48 @@ export default {
           console.log(error)
         })
     },
+    changePWDLoginUser () {
+      let options = {
+        params: {
+          password: '654321'
+        }
+      }
+      this.$axios.get(this.changePwdRULP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getRolesByType () {
+      let options = {
+        params: {
+          systemType: 2
+        }
+      }
+      this.$axios.get(this.getRolesBySystemTypeRULP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getResourceByType () {
+      let options = {
+        params: {
+          systemType: 2
+        }
+      }
+      this.$axios.get(this.getResourceBySystemTypeRULP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     createRes () {
       this.$axios.post(this.createResURLP, this.res)
         .then(function (response) {
@@ -201,6 +276,52 @@ export default {
           console.log(error)
         })
     },
+    createRole () {
+      this.$axios.post(this.createRoleURLP, this.role_o)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    updateRole () {
+      this.$axios.post(this.updateRoleURLP, this.role_o)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    deleteRole () {
+      let options = {
+        params: {
+          resourceId: 114
+        }
+      }
+      this.$axios.get(this.deleteRoleURLP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    deleteAnyRole () {
+      let options = {
+        params: {
+          resourceIds: '115, 116, 117'
+        }
+      }
+      this.$axios.get(this.deleteAnyRoleURLP, options, { withCredentials: true, headers: { 'X-XSRF-Token': this.cors } })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     getRolesPage () {
       let options = {
         params: {
@@ -221,6 +342,24 @@ export default {
     },
     getRolesPagePost () {
       this.$axios.post(this.getRolesPageURLP, this.role)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getUserPagePost () {
+      this.$axios.post(this.getUsersPageURLP, this.userpage)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    changeSorted () {
+      this.$axios.post(this.changeSortedURLP, this.fromTo)
         .then(function (response) {
           console.log(response)
         })
