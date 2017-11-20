@@ -13,12 +13,12 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/',
+      path: '/index',
       name: 'Index',
       component: Index
     },
     {
-      path: '/vuexDemo',
+      path: '/',
       name: 'vuexDemo',
       component: VuexDemo
     }
