@@ -21,11 +21,11 @@ module.exports = {
         '^/wenchao': '/'
       }
     },
-    '/yanfeng': {
-      target: 'http://192.168.1.144:8080/',
+    '/mock': {
+      target: 'https://www.easy-mock.com/mock/5a50d59caaeb8a0aa380bc36/test',
       changeOrigin: true,
       pathRewrite: {
-        '^/yanfeng': '/'
+        '^/mock': '/'
       }
     }
   }

@@ -9,9 +9,10 @@
 </template>
 
 <script>
+import { demo } from '../../api/index'
 export default {
   name: 'vuexDemo',
-  data() {
+  data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       superinfo: {},
@@ -24,6 +25,29 @@ export default {
       loginUrlP: '/api/login',
       logoutUrlP: '/api/logout',
       createUserURLP: '/api/zsuSysUser/create',
+      petUrl: '/mock/v2/pet/{petId}',
+      ipetUrl: '/mock/v2/pet',
+      example: {
+        'id': 67,
+        'category': {
+          'id': 75,
+          'name': '6PN$d'
+        },
+        'name': 'UiBw&',
+        'photoUrls': [
+          'IQIe'
+        ],
+        'tags': [
+          {
+            'id': 97,
+            'name': 'Km0H8v'
+          }
+        ],
+        'status': 'available'
+      },
+      opts: {
+        path: { 'petId': 'abc' }
+      },
       user: {
         username: 'narci',
         password: '123456',
@@ -36,30 +60,33 @@ export default {
 
     }
   },
-  mounted: function() {
-    this.$nextTick(function() {
+  mounted: function () {
+    this.$nextTick(function () {
       // this.cors = this.getCookie('XSRF-TOKEN')
       // this.logout()
       // this.handleLogin()
       // this.test()
       // this.createUser()
       // this.createUser2()
-      this.login()
+      // this.login()
+      // this.getDataFromEasyMock()
+      // this.insertDataFromEasyMock()
+      this.testEasyMockCli()
     })
   },
   computed: {
-    count() {
+    count () {
       return this.$store.state.count
     }
   },
   methods: {
-    increment() {
+    increment () {
       this.$store.commit('increment')
     },
-    decrement() {
+    decrement () {
       this.$store.commit('decrement')
     },
-    logout() {
+    logout () {
       this.$axios({
         method: 'get',
         url: this.logoutUrl,
@@ -72,12 +99,12 @@ export default {
         console.log(error)
       })
     },
-    login: function() {
+    login: function () {
       this.$axios({
         url: this.loginURL,
         method: 'post',
         data: this.loginForm,
-        transformRequest: [function(data) {
+        transformRequest: [function (data) {
           // Do whatever you want to transform the data
           let ret = ''
           for (let it in data) {
@@ -90,27 +117,61 @@ export default {
           'Authorization': 'Basic ZGZxeS1ncm91cC1pbmM6UmZXSTFtR21oV0dpckJiZGtJaVV2VTlpZExzdGlWSk9Jc250R1labDJ6Z1JhOCs3Q0YyOVB2aDFBb0dCQU5PeA==='
         }
       })
-        .then(function(response) {
+        .then(function (response) {
           console.log(response)
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error)
         })
     },
-    getUser: function() {
+    getUser: function () {
       this.$axios.get(this.registerUrl, this.newUserInfo, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-        .then(function(response) {
+        .then(function (response) {
           console.log(response)
         })
-        .catch(function(error) {
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    getDataFromEasyMock: function () {
+      this.$axios.get(this.petUrl, this.newUserInfo, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    insertDataFromEasyMock: function () {
+      this.$axios.post(this.ipetUrl, this.example, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    testEasyMockCli: function () {
+      console.log('abc')
+      demo.v2_pet_petId_get(this.opts).then(function (response) {
+        console.log(response)
+      })
+        .catch(function (error) {
           console.log(error)
         })
     }
-
   }
 }
 </script>

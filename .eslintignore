@@ -1,2 +1,4 @@
 build/*.js
-config/*.js
+config/*.
+api/demo/*.js
+api/*.js
